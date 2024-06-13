@@ -1,7 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import { User } from '../interfaces/IUsers';
 
-export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+interface AuthenticatedRequest extends Request {
+    user?: User;
+}
+
+export const authMiddleware = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
@@ -9,7 +14,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as User;
         req.user = decoded;
         next();
     } catch (ex) {

@@ -10,18 +10,19 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Connect to database
-connectDB();
+
+connectDB().then((connection:any) => {
+    if (connection) {
+        console.log('Database connected successfully');
+    }
+}).catch((error:any) => {
+    console.error('Failed to connect to database:', error);
+});
 
 app.use(bodyParser.json());
 
-// Define routes
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
