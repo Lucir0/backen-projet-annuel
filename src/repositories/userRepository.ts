@@ -1,36 +1,33 @@
-import db from '../config/db';
+import connectDB from '../config/db';
 
-const getUserByEmail = (email: string) => {
-    return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM users WHERE email = ?', [email], (error, results) => {
-            if (error) {
-                return reject(error);
-            }
-            resolve(results[0]);
-        });
-    });
+const getUserByEmail = async (email: string) => {
+    try {
+        const db = await connectDB();
+        const [results]: Array<any> = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        return results[0];
+    } catch (error) {
+        throw error;
+    }
 };
 
-const getAllUsers = () => {
-    return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM users', (error, results) => {
-            if (error) {
-                return reject(error);
-            }
-            resolve(results);
-        });
-    });
+const getAllUsers = async () => {
+    try {
+        const db = await connectDB();
+        const [results] = await db.query('SELECT * FROM users');
+        return results;
+    } catch (error) {
+        throw error;
+    }
 };
 
-const createUser = (userData: any) => {
-    return new Promise((resolve, reject) => {
-        db.query('INSERT INTO users SET ?', userData, (error, results) => {
-            if (error) {
-                return reject(error);
-            }
-            resolve(results);
-        });
-    });
+const createUser = async (userData: any) => {
+    try {
+        const db = await connectDB();
+        const [results] = await db.query('INSERT INTO users SET ?', userData);
+        return results;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export default { getUserByEmail, getAllUsers, createUser };

@@ -24,6 +24,10 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the user management API');
+});
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
