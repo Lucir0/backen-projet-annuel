@@ -1,21 +1,21 @@
-import { Service } from 'typedi';
-import connectDB from '../config/db';
+import User from '@models/IUsers';
 
-
-@Service()
-class UserRepository{
-    constructor(private readonly connection: any){
-        this.connection = connection;
+class UserRepository {
+  async getUsers() {
+    try {
+      return await User.findAll();
+    } catch (error) {
+      throw new Error('Erreur interne du serveur');
     }
+  }
 
-    async getUsers(){
-        try {
-            return await this.connection.query('SELECT * FROM users');
-        } catch (error) {
-            throw new Error('Internal server error');
-        }
+  async createUser(userData: { username: string; birthday: Date }) {
+    try {
+      return await User.create(userData);
+    } catch (error) {
+      throw new Error('Erreur interne du serveur');
     }
-    
+  }
 }
 
 export default UserRepository;
