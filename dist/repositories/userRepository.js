@@ -14,9 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("../config/db"));
 const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log("EMAIL : ", email);
     try {
         const db = yield (0, db_1.default)();
-        const [results] = yield db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [results] = yield db.query('SELECT * FROM admin WHERE email = ?', [email]);
         return results[0];
     }
     catch (error) {
@@ -26,7 +27,12 @@ const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* ()
 const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const db = yield (0, db_1.default)();
-        const [results] = yield db.query('SELECT * FROM users');
+        const [adminResults, suiveurResults] = yield Promise.all([
+            db.query('SELECT * FROM admin'),
+            db.query('SELECT * FROM suiveur')
+        ]);
+        const results = adminResults.concat(suiveurResults);
+        console.log(results);
         return results;
     }
     catch (error) {

@@ -16,6 +16,7 @@ exports.userController = void 0;
 const userServices_1 = __importDefault(require("../services/userServices"));
 exports.userController = {
     getUsers: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("OUIIIII");
         try {
             const users = yield userServices_1.default.getUsers();
             res.json(users);

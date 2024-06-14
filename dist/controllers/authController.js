@@ -16,9 +16,10 @@ exports.authController = void 0;
 const authService_1 = __importDefault(require("../services/authService"));
 exports.authController = {
     login: (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log("login body", req.body);
         try {
-            const { email, password } = req.body;
-            const token = yield authService_1.default.login(email, password);
+            const { Email, Mot_De_Passe } = req.body;
+            const token = yield authService_1.default.login(Email, Mot_De_Passe);
             if (token) {
                 res.json({ token });
             }

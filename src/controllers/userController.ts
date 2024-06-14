@@ -4,6 +4,7 @@ import userServices from '../services/userServices';
 
 export const userController = {
     getUsers: async (req: Request, res: Response) => {
+        console.log("OUIIIII");
         try {
             const users = await userServices.getUsers();
             res.json(users);

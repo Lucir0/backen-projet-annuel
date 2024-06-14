@@ -5,7 +5,7 @@ import { authMiddleware } from '../middlewares/authMiddlesware';
 
 const router = Router();
 
-router.get('/', authMiddleware, userController.getUsers);
+router.get('/', userController.getUsers);
 router.post('/', authMiddleware, userController.createUser);
 
 export default router;

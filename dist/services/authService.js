@@ -13,16 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userRepository_1 = __importDefault(require("../repositories/userRepository"));
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const login = (email, password) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield userRepository_1.default.getUserByEmail(email);
-    if (user && bcryptjs_1.default.compareSync(password, user.password)) {
-        const token = jsonwebtoken_1.default.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-            expiresIn: '1h'
-        });
-        return token;
+const login = (Email, Mot_De_Passe) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log("EMAIL Service : ", Email);
+        const user = yield userRepository_1.default.getUserByEmail(Email);
+        console.log("USER : ", user);
+        if (user && Mot_De_Passe === user.Mot_De_Passe) {
+            const token = jsonwebtoken_1.default.sign({ id: user.ID_Admin, Email: user.Email }, process.env.JWT_SECRET, {
+            // pas d'expiration pour le token
+            });
+            console.log("TOKEN : ", token);
+            return token;
+        }
+        console.log("Invalid credentials");
+        return null;
     }
-    return null;
+    catch (error) {
+        console.error("Error in login service:", error);
+        throw new Error('Internal server error');
+    }
 });
 exports.default = { login };

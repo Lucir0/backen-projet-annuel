@@ -22,6 +22,9 @@ const port = process.env.PORT || 3000;
 app.use(body_parser_1.default.json());
 app.use('/api/users', userRoutes_1.default);
 app.use('/api/auth', authRoutes_1.default);
+app.get('/', (req, res) => {
+    res.send('Welcome to the user management API');
+});
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

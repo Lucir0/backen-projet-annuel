@@ -1,9 +1,10 @@
 import connectDB from '../config/db';
 
 const getUserByEmail = async (email: string) => {
+    console.log("EMAIL : ", email);
     try {
         const db = await connectDB();
-        const [results]: Array<any> = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        const [results]: Array<any> = await db.query('SELECT * FROM admin WHERE email = ?', [email]);
         return results[0];
     } catch (error) {
         throw error;
@@ -13,7 +14,12 @@ const getUserByEmail = async (email: string) => {
 const getAllUsers = async () => {
     try {
         const db = await connectDB();
-        const [results] = await db.query('SELECT * FROM users');
+        const [adminResults, suiveurResults] = await Promise.all([
+            db.query('SELECT * FROM admin'),
+            db.query('SELECT * FROM suiveur')
+          ]);
+        const results = adminResults.concat(suiveurResults);
+        console.log(results);
         return results;
     } catch (error) {
         throw error;
