@@ -8,7 +8,7 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = __importDefault(require("./config/db"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
-const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+// import authRoutes from './routes/authRoutes';
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
@@ -21,7 +21,10 @@ const port = process.env.PORT || 3000;
 });
 app.use(body_parser_1.default.json());
 app.use('/api/users', userRoutes_1.default);
-app.use('/api/auth', authRoutes_1.default);
+// app.use('/api/auth', authRoutes);
+app.get('/', (req, res) => {
+    res.send('Welcome to the user management API');
+});
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

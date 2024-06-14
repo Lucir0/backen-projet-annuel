@@ -26,6 +26,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.0",
     "ts-node": "^10.9.2",
+    "typedi": "^0.10.0",
     "undici-types": "^5.26.5"
   },
   "description": ""

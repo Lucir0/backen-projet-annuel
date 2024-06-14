@@ -1,22 +1,22 @@
 import { Request, Response } from 'express';
-import userServices from '../services/userServices';
+import UserService from '../services/userServices';
+import Container, { Service } from 'typedi';
 
+@Service()
+class UserController {
+    constructor (private readonly userService: UserService) {
+        this.userService = Container.get(UserService);
+    }
 
-export const userController = {
-    getUsers: async (req: Request, res: Response) => {
+    async getUsers(req: Request, res: Response) {
+        console.log("Ouii");
         try {
-            const users = await userServices.getUsers();
-            res.json(users);
-        } catch (error: any) {
-            res.status(500).json({ error: error.message });
-        }
-    },
-    createUser: async (req: Request, res: Response) => {
-        try {
-            const user = await userServices.createUser(req.body);
-            res.status(201).json(user);
-        } catch (error : any) {
-            res.status(500).json({ error: error.message });
+            const users = await this.userService.getUsers();
+            res.status(200).json(users);
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error' });
         }
     }
-};
+}
+
+export default UserController;

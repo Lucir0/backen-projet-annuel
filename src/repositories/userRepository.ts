@@ -1,33 +1,21 @@
+import { Service } from 'typedi';
 import connectDB from '../config/db';
 
-const getUserByEmail = async (email: string) => {
-    try {
-        const db = await connectDB();
-        const [results]: Array<any> = await db.query('SELECT * FROM users WHERE email = ?', [email]);
-        return results[0];
-    } catch (error) {
-        throw error;
-    }
-};
 
-const getAllUsers = async () => {
-    try {
-        const db = await connectDB();
-        const [results] = await db.query('SELECT * FROM users');
-        return results;
-    } catch (error) {
-        throw error;
+@Service()
+class UserRepository{
+    constructor(private readonly connection: any){
+        this.connection = connection;
     }
-};
 
-const createUser = async (userData: any) => {
-    try {
-        const db = await connectDB();
-        const [results] = await db.query('INSERT INTO users SET ?', userData);
-        return results;
-    } catch (error) {
-        throw error;
+    async getUsers(){
+        try {
+            return await this.connection.query('SELECT * FROM users');
+        } catch (error) {
+            throw new Error('Internal server error');
+        }
     }
-};
+    
+}
 
-export default { getUserByEmail, getAllUsers, createUser };
+export default UserRepository;

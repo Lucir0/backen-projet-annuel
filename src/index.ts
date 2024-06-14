@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
 import userRoutes from './routes/userRoutes';
-import authRoutes from './routes/authRoutes';
+// import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ connectDB().then((connection:any) => {
 app.use(bodyParser.json());
 
 app.use('/api/users', userRoutes);
-app.use('/api/auth', authRoutes);
+// app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the user management API');

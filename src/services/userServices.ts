@@ -1,11 +1,20 @@
+import Container, { Service } from 'typedi';
 import userRepository from '../repositories/userRepository';
+import UserRepository from '../repositories/userRepository';
 
-const getUsers = async () => {
-    return await userRepository.getAllUsers();
-};
+@Service()
+class UserService{
+    constructor(private readonly userRepository: userRepository){
+        this.userRepository = Container.get(UserRepository);
+    }
 
-const createUser = async (userData: any) => {
-    return await userRepository.createUser(userData);
-};
+    async getUsers(){
+        try {
+            return await this.userRepository.getUsers();
+        } catch (error) {
+            throw new Error('Internal server error');
+        }
+    }
+}
 
-export default { getUsers, createUser };
+export default UserService;
