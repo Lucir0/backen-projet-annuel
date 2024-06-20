@@ -12,7 +12,7 @@ const login = async (Email: string, Mot_De_Passe: string) => {
                // pas d'expiration pour le token
             });
             console.log("TOKEN : ", token);
-            return token;
+            return [token, user];
         }
         console.log("Invalid credentials");
         return null;

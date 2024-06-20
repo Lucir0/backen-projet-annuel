@@ -40,9 +40,10 @@ const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(userData);
     try {
         const db = yield (0, db_1.default)();
-        const [results] = yield db.query('INSERT INTO users SET ?', userData);
+        const [results] = yield db.query('INSERT INTO admin SET ?', userData);
         return results;
     }
     catch (error) {

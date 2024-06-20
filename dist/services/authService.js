@@ -24,7 +24,7 @@ const login = (Email, Mot_De_Passe) => __awaiter(void 0, void 0, void 0, functio
             // pas d'expiration pour le token
             });
             console.log("TOKEN : ", token);
-            return token;
+            return [token, user];
         }
         console.log("Invalid credentials");
         return null;

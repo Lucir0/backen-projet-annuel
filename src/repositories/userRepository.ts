@@ -27,9 +27,10 @@ const getAllUsers = async () => {
 };
 
 const createUser = async (userData: any) => {
+    console.log(userData);
     try {
         const db = await connectDB();
-        const [results] = await db.query('INSERT INTO users SET ?', userData);
+        const [results] = await db.query('INSERT INTO admin SET ?', userData);
         return results;
     } catch (error) {
         throw error;

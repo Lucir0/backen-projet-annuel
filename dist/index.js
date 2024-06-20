@@ -9,9 +9,15 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const db_1 = __importDefault(require("./config/db"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const cors_1 = __importDefault(require("cors"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
+const corsOptions = {
+    origin: 'http://localhost:3001', // Remplacez par l'origine de votre frontend
+    optionsSuccessStatus: 200 // Pour les navigateurs anciens
+};
+app.use((0, cors_1.default)(corsOptions));
 (0, db_1.default)().then((connection) => {
     if (connection) {
         console.log('Database connected successfully');
